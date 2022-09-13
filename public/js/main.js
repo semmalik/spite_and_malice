@@ -1,5 +1,7 @@
 
-document.querySelector('.submitPlayerValues').addEventListener('click', createGame)
+// Game set up
+
+// document.querySelector('.submitPlayerValues').addEventListener('click', createGame)
 
 let playerOneName
 let playerTwoName
@@ -14,7 +16,7 @@ function determinePlayerOrder() {
     playerTwoCard = document.querySelector('input[name="playerTwoCard"]:checked').value
 
     // if first player has lower card than second, player order and values will be swapped
-    if (playerOneCard < playerTwoCard) {
+    if (Number(playerOneCard) < Number(playerTwoCard)) {
         let tempName = playerTwoName
         playerTwoName = playerOneName
         playerOneName = tempName
@@ -24,7 +26,6 @@ function determinePlayerOrder() {
         playerOneCard = tempCard
     }
 }
-
 
 async function createGame() {
     
@@ -43,13 +44,13 @@ async function createGame() {
         })
         const data = response.json()
         console.log(data)
-        location.assign('/playerTurn')
+
+        gameId = data._id
 
     } catch (err) {
         console.log(err)
     }
 }
-
 
 async function newStackCardPLayerOne() {
     try {
@@ -111,6 +112,55 @@ async function cardsDrawnPLayerTwo() {
     }
 }
 
+
+
+//player turn functions
+document.querySelector('.endTurn').addEventListener('click', endTurn)
+
+//cards drawn selectors and functions
+document.querySelector('.addFive').addEventListener('click', addFive)
+const cardDrawRadios = document.querySelectorAll('input[name="cardsDrawn"]')
+for (let radio of cardDrawRadios) {
+    radio.onclick = (e) => {
+        console.log(e.target.value)
+        document.querySelector('.numDrawnCards').innerHTML = e.target.value
+    }
+}
+
+function addFive() {
+    let currentNum = Number(document.querySelector('.numDrawnCards').innerHTML)
+    currentNum += 5
+    document.querySelector('.numDrawnCards').innerHTML = currentNum
+}
+
+//stack cards selectors
+let stackCardArray = []
+const stackCardRadios = document.querySelectorAll('input[name="stackCard"]')
+for (let radio of stackCardRadios) {
+    radio.onclick = (e) => {
+        stackCardArray.push(e.target.value)
+        document.querySelector('.newStackCard').innerHTML = e.target.value
+        console.log(stackCardArray)
+    }
+}
+
+async function endTurn() {
+    let cardsDrawn = document.querySelector('.numDrawnCards').innerHTML
+    console.log(`total cards drawn: ${cardsDrawn} and stack card array: ${stackCardArray}`)
+    try {
+        const response = await fetch('/game/playerOneEndTurn/6320ca61be1e6ac066f420b5', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'stackCards': stackCardArray,
+                'cardsDrawn': cardsDrawn
+            })
+        })
+        console.log(response)
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 
 

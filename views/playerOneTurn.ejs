@@ -9,26 +9,32 @@
 </head>
 <body>
     
-    <h1>Player Turn</h1>
+    <h1><%=playerOne.name%>'s Turn</h1>
 
 
-    <span>Number of Cards Drawn</span>
-        <input type="radio" id="one" name="cardsDrawn" value="1">
-        <label for="one">ace</label>
-        <input type="radio" id="two" name="cardsDrawn" value="2">
-        <label for="two">2</label>
-        <input type="radio" id="three" name="cardsDrawn" value="3">
-        <label for="three">3</label>
-        <input type="radio" id="four" name="cardsDrawn" value="4">
-        <label for="four">4</label>
-        <input type="radio" id="five" name="cardsDrawn" value="5">
-        <label for="five">5</label>
+    <span>Number of Cards Drawn:</span>
+    <span class="numDrawnCards">1</span>
 
     <br>
+    <input type="radio" id="one" name="cardsDrawn" value="1" checked>
+    <label for="one">1</label>
+    <input type="radio" id="two" name="cardsDrawn" value="2">
+    <label for="two">2</label>
+    <input type="radio" id="three" name="cardsDrawn" value="3">
+    <label for="three">3</label>
+    <input type="radio" id="four" name="cardsDrawn" value="4">
+    <label for="four">4</label>
+    <input type="radio" id="five" name="cardsDrawn" value="5">
+    <label for="five">5</label>
 
     <button type="button" class="addFive">Add Five</button>
 
+    <br>
     
+    <span>New Stack Card:</span>
+    <span class="newStackCard"></span>
+
+    <br>
     <input type="radio" id="ace" name="stackCard" value="ace">
     <label for="ace">ace</label>
     <input type="radio" id="two" name="stackCard" value="2">
@@ -56,8 +62,9 @@
     <input type="radio" id="king" name="stackCard" value="13">
     <label for="king">king</label>
 
-    
-    <button type="submit" class="submitPlayerValues">Start Game</button>
+    <br>
+    <button type="submit" class="endGame">End Game</button>
+    <button type="submit" class="endTurn">End Turn</button>
 
     <script src="/js/main.js"></script>
 </body>

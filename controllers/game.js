@@ -16,8 +16,8 @@ module.exports = {
             })
 
             console.log(`new game has been created: ${game}`)
-            // res.send(game)
-            res.render("playerTurn.ejs")
+            res.redirect(`/game/playerOneTurn/${game._id}`)
+            
         } catch (err) {
             console.log(err)
         }
@@ -87,29 +87,36 @@ module.exports = {
             console.log(err)
         }
     },
-    playerTurn: (req, res) => {
-        console.log('inside playerTurn game controller')
-        res.send("playerTurn.ejs")
+    playerOneTurn: async (req, res) => {
+        try {
+            const game = await Game.findById(
+                {'_id': req.params._id}
+            )
+            console.log('inside playerTurn game controller')
+            res.render("playerOneTurn.ejs", {playerOne: game.playerOne})
+        } catch (err) {
+            console.log(err)
+        }
+        
+    },
+    playerOneEndTurn: async (req, res) => {
+        try {
+            const response = await Game.findByIdAndUpdate(
+                {'_id': req.params._id},
+                {
+                    '$push': {
+                        'playerOne.stackCards': {'$each': req.body.stackCards},
+                        'playerOne.cardsDrawn': req.body.cardsDrawn
+                    }
+                }
+            )
+            console.log(response)
+        } catch (err) {
+            console.log(err)
+        }
     }
 }
 
 
 
-
-
-// playerOne: {
-//     name: {
-//         type: String,
-//         required: true,
-//         default: playerOne
-//     },
-//     stackCards: {
-//         type: [String]
-//     },
-//     cardDrawAmount: {
-//         type: [Number]
-//     },
-//     winner: {
-//         type: Boolean,
-//         default: false
-//     }
+// /playerTurn/:_id/:number
