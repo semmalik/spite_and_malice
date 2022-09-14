@@ -2,18 +2,18 @@ const express = require('express')
 const router = express.Router()
 const gameController = require('../controllers/game')
 
-router.get('/playerOneTurn/:_id', gameController.playerOneTurn)
-// router.get('/playerTwoTurn/:_id', gameController.playerTwoTurn)
-
-
 router.post('/createGame', gameController.createGame)
 
-router.put('/playerOneEndTurn/:_id', gameController.playerOneEndTurn)
-router.put('/newStackCardPLayerOne/:_id', gameController.newStackCardPLayerOne)
-router.put('/newStackCardPLayerTwo/:_id', gameController.newStackCardPLayerTwo)
+router.get('/playerTurn/:_id/:playerNum', gameController.playerTurn)
 
-router.put('/cardsDrawnPLayerOne/:_id', gameController.cardsDrawnPLayerOne)
-router.put('/cardsDrawnPLayerTwo/:_id', gameController.cardsDrawnPLayerTwo)
+router.get('/getRemainingStackCards/:_id/:playerNum', gameController.getRemainingStackCards)
+
+router.put('/endTurn/:_id/:playerNum', gameController.endTurn)
+
+router.put('/endGame/:_id/:playerNum', gameController.endGame)
+
+router.put('/putRemainingStackCards/:_id/:playerNum', gameController.putRemainingStackCards)
+
 
 
 module.exports = router

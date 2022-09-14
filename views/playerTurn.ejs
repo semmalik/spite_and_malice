@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Players</title>
+    <title>Player Turn</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     
-    <h1><%=playerOne.name%>'s Turn</h1>
+    <h1><%=player.name%>'s Turn</h1>
+    <span class="gameId hidden"><%=gameId%></span>
+    <span class="player hidden"><%=playerNum%></span>
 
 
     <span>Number of Cards Drawn:</span>
@@ -66,6 +68,6 @@
     <button type="submit" class="endGame">End Game</button>
     <button type="submit" class="endTurn">End Turn</button>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/playerTurn.js"></script>
 </body>
 </html>

@@ -4,7 +4,6 @@ const mongoose = require('mongoose')
 const logger = require('morgan')
 const connectDB = require('./config/database')
 const mainRoutes = require('./routes/main')
-// const playerRoutes = require('./routes/players')
 const gameRoutes = require('./routes/game')
 
 
@@ -23,7 +22,6 @@ app.use(logger('dev'))
 
 
 app.use('/', mainRoutes)
-// app.use('/players', playerRoutes)
 app.use('/game', gameRoutes)
 
 

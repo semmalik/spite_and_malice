@@ -15,108 +15,175 @@ module.exports = {
                 }
             })
 
-            console.log(`new game has been created: ${game}`)
-            res.redirect(`/game/playerOneTurn/${game._id}`)
+            const gameId = game._id.toString()
+
+            console.log(`new game has been created: ${game} with id of: ${gameId}`)
+            res.send(game)
+            res.redirect(`/game/playerTurn/${gameId}`)
             
         } catch (err) {
             console.log(err)
         }
     },
-    newStackCardPLayerOne: async (req, res) => {
-        console.log('inside playerOne stack card controller')
+    playerTurn: async (req, res) => {
         const gameId = req.params._id
-        try {
-            await Game.findByIdAndUpdate(
-                {'_id': gameId},
-                {
-                    '$push': {
-                        'playerOne.stackCards': req.body.stackCard
-                    }
-                }
-            )
-            console.log(`${gameId} has added new stack card to playerOne: ${req.body.stackCard}`)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    newStackCardPLayerTwo: async (req, res) => {
-        const gameId = req.params._id
-        try {
-            await Game.findByIdAndUpdate(
-                {'_id': gameId},
-                {
-                    '$push': {
-                        'playerTwo.stackCards': req.body.stackCard
-                    }
-                }
-            )
-            console.log(`${gameId} has added new stack card to playerTwo: ${req.body.stackCard}`)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    cardsDrawnPLayerOne: async (req, res) => {
-        const gameId = req.params._id
-        try {
-            await Game.findByIdAndUpdate(
-                {'_id': gameId},
-                {
-                    '$push': {
-                        'playerOne.cardsDrawn': req.body.cardsDrawn
-                    }
-                }
-            )
-            console.log(`${gameId} playerOne has drawn cards: ${req.body.cardsDrawn}`)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    cardsDrawnPLayerTwo: async (req, res) => {
-        const gameId = req.params._id
-        try {
-            await Game.findByIdAndUpdate(
-                {'_id': gameId},
-                {
-                    '$push': {
-                        'playerTwo.cardsDrawn': req.body.cardsDrawn
-                    }
-                }
-            )
-            console.log(`${gameId} playerTwo has drawn cards: ${req.body.cardsDrawn}`)
-        } catch (err) {
-            console.log(err)
-        }
-    },
-    playerOneTurn: async (req, res) => {
+        const playerNum = req.params.playerNum
+        console.log(`game id from params: ${gameId}`)
+        console.log(`player num from params: ${playerNum}`)
         try {
             const game = await Game.findById(
-                {'_id': req.params._id}
+                {'_id': gameId}
             )
             console.log('inside playerTurn game controller')
-            res.render("playerOneTurn.ejs", {playerOne: game.playerOne})
+
+            if (playerNum == 'playerOne') {
+                res.render("playerTurn.ejs", {player: game.playerOne, gameId: game._id, playerNum: 'playerOne'})
+            } else {
+            res.render("playerTurn.ejs", {player: game.playerTwo, gameId: game._id, playerNum: 'playerTwo'})
+            }
         } catch (err) {
             console.log(err)
         }
         
     },
-    playerOneEndTurn: async (req, res) => {
-        try {
-            const response = await Game.findByIdAndUpdate(
-                {'_id': req.params._id},
-                {
-                    '$push': {
-                        'playerOne.stackCards': {'$each': req.body.stackCards},
-                        'playerOne.cardsDrawn': req.body.cardsDrawn
+    endTurn: async (req, res) => {
+        const gameId = req.params._id
+        const playerNum = req.params.playerNum
+
+        if (playerNum == 'playerOne') {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                            'playerOne.cardsDrawn': req.body.cardsDrawn
+                        }
                     }
-                }
+                )
+                console.log(response)
+                res.redirect(`/game/playerTurn/${gameId}/playerTwo`)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                            'playerTwo.cardsDrawn': req.body.cardsDrawn
+                        }
+                    }
+                )
+                console.log(response)
+                res.redirect(`/game/playerTurn/${gameId}/playerOne`)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    },
+    endGame: async (req, res) => {
+        const gameId = req.params._id
+        const playerNum = req.params.playerNum
+
+        if (playerNum == 'playerOne') {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                            'playerOne.cardsDrawn': req.body.cardsDrawn
+                        },
+                        '$set': {
+                            'playerOne.winner': true
+                        }
+                    }
+                )
+                console.log(response)
+                res.redirect(`/game/remainingStackCards/${gameId}/playerTwo`)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                            'playerTwo.cardsDrawn': req.body.cardsDrawn
+                        },
+                        '$set': {
+                            'playerTwo.winner': true
+                        }
+                    }
+                )
+                console.log(response)
+                res.redirect(`/game/remainingStackCards/${gameId}/playerOne`)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    },
+    getRemainingStackCards: async (req, res) => {
+        const gameId = req.params._id
+        const playerNum = req.params.playerNum
+        console.log(`game id from params: ${gameId}`)
+        console.log(`player num from params: ${playerNum}`)
+        try {
+            const game = await Game.findById(
+                {'_id': gameId}
             )
-            console.log(response)
+            console.log('inside playerTurn game controller')
+
+            if (playerNum == 'playerOne') {
+                res.render("endGame.ejs", {player: game.playerOne, gameId: game._id, playerNum: 'playerOne'})
+            } else {
+            res.render("endGame.ejs", {player: game.playerTwo, gameId: game._id, playerNum: 'playerTwo'})
+            }
         } catch (err) {
             console.log(err)
+        }
+    },
+    putRemainingStackCards: async (req, res) => {
+        const gameId = req.params._id
+        const playerNum = req.params.playerNum
+
+        if (playerNum == 'playerOne') {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                        }
+                    }
+                )
+                console.log(response)
+                res.redirect(`/main/`)
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            try {
+                const response = await Game.findByIdAndUpdate(
+                    {'_id': gameId},
+                    {
+                        '$push': {
+                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                        }
+                    }
+                )
+                console.log(response)
+                res.redirect(`/main/`)
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 }
 
 
-
-// /playerTurn/:_id/:number
