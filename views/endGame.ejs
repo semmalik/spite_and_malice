@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>End Game</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <section class="container">
     
     <h1>Enter <%=player.name%>'s remaining cards:</h1>
     <span class="gameId hidden"><%=gameId%></span>
@@ -16,36 +22,67 @@
     <span class="remainingCards"></span>
 
     <br>
-    <input type="radio" id="ace" name="remainingStackCard" value="ace">
-    <label for="ace">ace</label>
-    <input type="radio" id="two" name="remainingStackCard" value="2">
-    <label for="two">2</label>
-    <input type="radio" id="three" name="remainingStackCard" value="3">
-    <label for="three">3</label>
-    <input type="radio" id="four" name="remainingStackCard" value="4">
-    <label for="four">4</label>
-    <input type="radio" id="five" name="remainingStackCard" value="5">
-    <label for="five">5</label>
-    <input type="radio" id="six" name="remainingStackCard" value="6">
-    <label for="six">6</label>
-    <input type="radio" id="seven" name="remainingStackCard" value="7">
-    <label for="seven">7</label>
-    <input type="radio" id="eight" name="remainingStackCard" value="8">
-    <label for="eight">8</label>
-    <input type="radio" id="nine" name="remainingStackCard" value="9">
-    <label for="nine">9</label>
-    <input type="radio" id="ten" name="remainingStackCard" value="10">
-    <label for="ten">10</label>
-    <input type="radio" id="jack" name="remainingStackCard" value="11">
-    <label for="jack">jack</label>
-    <input type="radio" id="queen" name="remainingStackCard" value="12">
-    <label for="queen">queen</label>
-    <input type="radio" id="king" name="remainingStackCard" value="13">
-    <label for="king">king</label>
 
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="1">
+        <span>ace</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="2">
+        <span>2</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="3">
+        <span>3</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="4">
+        <span>four</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="5">
+        <span>5</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="6">
+        <span>6</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="7">
+        <span>7</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="8">
+        <span>8</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="9">
+        <span>9</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="10">
+        <span>10</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="11">
+        <span>jack</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="12">
+        <span>queen</span>
+    </label>
+    <label>
+        <input type="radio" class="ace" name="remainingStackCard" value="13">
+        <span>king</span>
+    </label>
+
+    <button type="submit" class="btn remove">Remove</button>
     <br>
-    <button type="submit" class="addCards">Submit</button>
+    <button type="submit" class="btn addCards">Submit</button>
+</section>
 
     <script src="/js/endGame.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
 </html>

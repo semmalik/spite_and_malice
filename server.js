@@ -20,11 +20,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(logger('dev'))
 
-
 app.use('/', mainRoutes)
 app.use('/game', gameRoutes)
 
 
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')
-})    
+})

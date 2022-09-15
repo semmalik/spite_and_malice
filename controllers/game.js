@@ -3,6 +3,7 @@ const Game = require('../models/Game')
 module.exports = {
     createGame: async (req, res) => {
         console.log('inside createGame in controller')
+
         try {
             const game = await Game.create({
                 'playerOne': {

@@ -1,6 +1,10 @@
 
 //Ending game functions
 
+document.querySelector('.addCards').addEventListener('click', addRemainingStackCards)
+document.querySelector('.remove').addEventListener('click', remove)
+
+
 let remainingCards = []
 const remainingStackCardRadios = document.querySelectorAll('input[name="remainingStackCard"]')
 for (let radio of remainingStackCardRadios) {
@@ -11,7 +15,16 @@ for (let radio of remainingStackCardRadios) {
     }
 }
 
-document.querySelector('.addCards').addEventListener('click', addRemainingStackCards)
+function remove() {
+    if (remainingCards.length > 1) {
+        const removedCard = remainingCards.pop()
+        document.querySelector('.remainingCards').innerHTML = remainingCards.join(' ')
+    } else if (remainingCards.length == 1) {
+        remainingCards.pop()
+        document.querySelector('.remainingCards').innerHTML = ''
+    }
+}
+
 
 async function addRemainingStackCards() {
     let gameId = document.querySelector('.gameId').innerHTML
@@ -33,3 +46,4 @@ async function addRemainingStackCards() {
         console.log(err)
     }
 }
+

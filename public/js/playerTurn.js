@@ -3,6 +3,8 @@
 
 document.querySelector('.endTurn').addEventListener('click', endTurn)
 document.querySelector('.endGame').addEventListener('click', endGame)
+document.querySelector('.remove').addEventListener('click', remove)
+
 
 //cards drawn selectors and functions
 document.querySelector('.addFive').addEventListener('click', addFive)
@@ -29,6 +31,17 @@ for (let radio of stackCardRadios) {
         document.querySelector('.newStackCard').innerHTML = e.target.value
         console.log(stackCardArray)
     }
+}
+
+function remove() {
+    if (stackCardArray.length > 1) {
+        stackCardArray.pop()
+        document.querySelector('.newStackCard').innerHTML = stackCardArray[stackCardArray.length-1]
+    } else if (stackCardArray.length == 1) {
+        stackCardArray.pop()
+        document.querySelector('.newStackCard').innerHTML = ''
+    }
+    
 }
 
 async function endTurn() {
