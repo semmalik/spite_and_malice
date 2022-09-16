@@ -19,8 +19,10 @@ function determinePlayerOrder() {
     playerOneCard = document.querySelector('input[name="playerOneCard"]:checked').value
     playerTwoCard = document.querySelector('input[name="playerTwoCard"]:checked').value
 
-    // if first player has lower card than second, player order and values will be swapped
-    if (Number(playerOneCard) < Number(playerTwoCard)) {
+    // if first player does not have a king but has lower card than the second, player order and values will be swapped
+    if (Number(playerOneCard) === 0) {
+        return
+    } else if (Number(playerTwoCard) === 0 || Number(playerOneCard) < Number(playerTwoCard)) {
         let tempName = playerTwoName
         playerTwoName = playerOneName
         playerOneName = tempName

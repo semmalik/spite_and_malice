@@ -57,7 +57,7 @@ module.exports = {
                     {'_id': gameId},
                     {
                         '$push': {
-                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                            'playerOne.stackCards': req.body.stackCards,
                             'playerOne.cardsDrawn': req.body.cardsDrawn
                         }
                     }
@@ -73,7 +73,7 @@ module.exports = {
                     {'_id': gameId},
                     {
                         '$push': {
-                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                            'playerTwo.stackCards': req.body.stackCards,
                             'playerTwo.cardsDrawn': req.body.cardsDrawn
                         }
                     }
@@ -94,11 +94,11 @@ module.exports = {
                 const response = await Game.findByIdAndUpdate(
                     {'_id': gameId},
                     {
-                        '$push': {
-                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                        "$push": {
+                            'playerOne.stackCards': req.body.stackCards,
                             'playerOne.cardsDrawn': req.body.cardsDrawn
                         },
-                        '$set': {
+                        "$set": {
                             'playerOne.winner': true
                         }
                     }
@@ -113,11 +113,11 @@ module.exports = {
                 const response = await Game.findByIdAndUpdate(
                     {'_id': gameId},
                     {
-                        '$push': {
-                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                        "$push": {
+                            'playerTwo.stackCards': req.body.stackCards,
                             'playerTwo.cardsDrawn': req.body.cardsDrawn
                         },
-                        '$set': {
+                        "$set": {
                             'playerTwo.winner': true
                         }
                     }
@@ -132,13 +132,10 @@ module.exports = {
     getRemainingStackCards: async (req, res) => {
         const gameId = req.params._id
         const playerNum = req.params.playerNum
-        console.log(`game id from params: ${gameId}`)
-        console.log(`player num from params: ${playerNum}`)
         try {
             const game = await Game.findById(
                 {'_id': gameId}
             )
-            console.log('inside playerTurn game controller')
 
             if (playerNum == 'playerOne') {
                 res.render("endGame.ejs", {player: game.playerOne, gameId: game._id, playerNum: 'playerOne'})
@@ -158,8 +155,8 @@ module.exports = {
                 const response = await Game.findByIdAndUpdate(
                     {'_id': gameId},
                     {
-                        '$push': {
-                            'playerOne.stackCards': {'$each': req.body.stackCards},
+                        '$set': {
+                            'playerOne.remainingCards': req.body.remainingCards
                         }
                     }
                 )
@@ -173,8 +170,8 @@ module.exports = {
                 const response = await Game.findByIdAndUpdate(
                     {'_id': gameId},
                     {
-                        '$push': {
-                            'playerTwo.stackCards': {'$each': req.body.stackCards},
+                        '$set': {
+                            "playerTwo.remainingCards": req.body.remainingCards
                         }
                     }
                 )

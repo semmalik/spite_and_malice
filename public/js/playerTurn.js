@@ -48,8 +48,9 @@ async function endTurn() {
     let cardsDrawn = document.querySelector('.numDrawnCards').innerHTML
     let gameId = document.querySelector('.gameId').innerHTML
     let player = document.querySelector('.player').innerHTML
-    console.log(gameId)
-    console.log(`total cards drawn: ${cardsDrawn} and stack card array: ${stackCardArray}`)
+    if (stackCardArray.length == 0) {
+        stackCardArray.push('-')
+    }
     try {
         const response = await fetch(`/game/endTurn/${gameId}/${player}`, {
             method: 'put',

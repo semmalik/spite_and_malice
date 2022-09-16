@@ -13,6 +13,10 @@ const gameSchema = new mongoose.Schema({
         cardsDrawn: {
             type: [String]
         },
+        remainingCards: {
+            type: String,
+            default: 0
+        },
         winner: {
             type: Boolean,
             default: false
@@ -29,6 +33,10 @@ const gameSchema = new mongoose.Schema({
         },
         cardsDrawn: {
             type: [String]
+        },
+        remainingCards: {
+            type: String,
+            default: 0
         },
         winner: {
             type: Boolean,
